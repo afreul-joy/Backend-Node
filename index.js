@@ -1,3 +1,4 @@
+const { query } = require('express')
 const express = require('express')
 const app = express()
 const port = 3000
@@ -15,8 +16,18 @@ const users = [
 ]
 
 //2nd step showing static data
+
 app.get('/users', (req, res) => {
+  //4th query parameter ব্যবহার 
+  const search = req.query.search;
+  if (search) {
+    const searchResult = users.filter(user => user.name.toLocaleLowerCase().includes(search));
+    res.send(searchResult);
+  }
+  else {
   res.send(users)
+  }
+  
 })
 
 //3rd step 
@@ -27,6 +38,14 @@ app.get('/users/:id', (req, res) => {
   // console.log(req.params.id); 
   res.send(user)
 }) 
+
+app.get('/fruits', (req, res) => {
+  res.send(['Mango','Apple','Blackbery'])
+})
+
+app.get('/fruits/mangoes/fazli', (req, res) => {
+  res.send('Yummy Yummy Tok Ammm')
+})
 
 app.listen(port, () => {
   console.log('listening to port', port);
