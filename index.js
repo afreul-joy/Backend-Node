@@ -1,10 +1,15 @@
 const { query } = require('express')
 const express = require('express')
+const cors = require('cors')
 const app = express()
-const port = 3000
+
+app.use(cors())
+app.use(express.json())
+
+const port = 5000
 
 app.get('/',(req, res) => {
-  res.send('Hello Worldd i am third node !')
+  res.send('Hello Worldd i am  third node !')
 })
 // 1st step create static data
 const users = [
@@ -28,6 +33,17 @@ app.get('/users', (req, res) => {
   res.send(users)
   }
   
+})
+
+// app.method
+app.post('/users', (req, res) => {
+  const newUser = req.body;
+  newUser.id = users.length;
+  users.push(newUser)
+
+  console.log("Hitting the post",req.body);
+  // res.send('post got hitted')
+  res.json(newUser)
 })
 
 //3rd step 
